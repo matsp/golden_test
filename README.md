@@ -29,4 +29,4 @@ void main() {
     expect(golden.content, equals(jsonEncoded));
   }));
 }
-```dart
+```
