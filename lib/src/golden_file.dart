@@ -1,7 +1,7 @@
 import 'dart:io';
 
 abstract class GoldenFile<T> {
-  String? get content;
+  T? get content;
 }
 
 class GoldenFileAsString implements GoldenFile<String> {
