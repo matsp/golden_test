@@ -5,7 +5,7 @@ abstract class GoldenFile<T> {
 }
 
 class GoldenFileAsString implements GoldenFile<String> {
-  late final String _data;
+  late final String? _data;
   String? expectedContent;
 
   @override
@@ -15,11 +15,18 @@ class GoldenFileAsString implements GoldenFile<String> {
     _data = _loadFile(fileName);
   }
 
-  String _loadFile(fileName) {
+  String? _loadFile(fileName) {
     if (expectedContent != null &&
         Platform.environment['UPDATE_GOLDEN'] == 'true') {
       File(fileName).writeAsStringSync(expectedContent!);
     }
-    return File(fileName).readAsStringSync();
+
+    String? file;
+    try {
+      file = File(fileName).readAsStringSync();
+    } catch (e) {
+      print('Golden file $fileName must be created first');
+    }
+    return file;
   }
 }
